@@ -21,11 +21,11 @@ runs:
       shell: bash
       run: |
         # Download Linux binary
-        wget https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.15.1/cloud-sql-proxy.linux.amd64 -O cloud_sql_proxy        
+        curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.15.1/cloud-sql-proxy.linux.amd64
         chmod +x cloud_sql_proxy
 
         # Start Cloud SQL Proxy
-        ./cloud_sql_proxy -instances=${{ inputs.instance }}=tcp:127.0.0.1:${{ inputs.port }} &
+        ./cloud_sql_proxy --port ${{ inputs.port }} ${{ inputs.instance }}
 
         # wait until connections are accepted
         sleep 3
